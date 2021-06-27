@@ -32,11 +32,11 @@ class UsersService {
     }
 
     async getUser({ email }) {
-        const query = `SELECT * FROM users WHERE email = '${email}'`;
+        const query = `SELECT id,name,email,password FROM users WHERE email = '${email}'`;
         const result = await this.oracledb.execute(query);
-        if(result.rows[0]!=null){
-            this.oracledb.closeConnection();
-            return {id: result.rows[0].id, name: result.rows[0].name, email: result.rows[0].email};
+        let registro = await result.resultSet.getRow();
+        if(result){   
+            return {id: registro.ID, name: registro.NAME, email: registro.EMAIL,password: registro.PASSWORD};
         }
         return 0;
     }
