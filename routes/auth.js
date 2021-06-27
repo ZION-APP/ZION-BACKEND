@@ -52,15 +52,16 @@ function authApi(app) {
         const { body: user } = req;
         const { email } = user;
         try {
+          const userService = new UsersService();
           const userExists = await userService.getUser({ email });
           if (!userExists) {
             const createdUserId = await userService.createUser({ user });
-    
+            console.log('ID: ',createdUserId);
             if(createdUserId > 0) {
                 res.status(201).json({
                     data: createdUserId,
                     message: 'user created',
-                });
+                });                
             } else {
                 res.status(202).json({
                     message: 'error while creating user',
