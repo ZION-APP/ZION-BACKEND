@@ -56,7 +56,6 @@ function authApi(app) {
           const userExists = await userService.getUser({ email });
           if (!userExists) {
             const createdUserId = await userService.createUser({ user });
-            console.log('ID: ',createdUserId);
             if(createdUserId > 0) {
                 res.status(201).json({
                     data: createdUserId,

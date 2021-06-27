@@ -13,14 +13,11 @@ class UsersService {
         console.log("Creating User");
         const { name, email, password } = user;        
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log("Data: ",user);
-
         //const query = `insert into users (name, email, password) values("${name}", "${email}", "${hashedPassword}")`;
         const query = `insert into users (name, email, password) values(:1, :2, :3)`;
         const rows =
            [[name, email , hashedPassword]];
-        const result= await this.oracledb.executemany(query,rows);
-        console.log('result:', result.rowsAffected);      
+        const result= await this.oracledb.executemany(query,rows);  
         if(result.rowsAffected> 0) {
             this.oracledb.commit();
             this.oracledb.closeConnection();
@@ -36,6 +33,7 @@ class UsersService {
         const result = await this.oracledb.execute(query);
         let registro = await result.resultSet.getRow();
         if(result){   
+            this.oracledb.closeConnection();
             return {id: registro.ID, name: registro.NAME, email: registro.EMAIL,password: registro.PASSWORD};
         }
         return 0;
