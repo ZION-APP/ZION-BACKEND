@@ -1,7 +1,7 @@
 {
-  "name": "mifondoapi",
+  "name": "zion-api",
   "version": "1.0.0",
-  "description": "Api REST usando oracle db",
+  "description": "Api REST for Zion App",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . ",
