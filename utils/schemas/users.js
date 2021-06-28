@@ -12,4 +12,4 @@ const createUserSchema = {
 module.exports = {
     userIdSchema,
     createUserSchema,
-}
+};

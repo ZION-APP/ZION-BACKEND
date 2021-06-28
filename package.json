@@ -4,6 +4,8 @@
   "description": "Api REST usando oracle db",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . ",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "DEBUG=app:* nodemon index",
     "start": "NODE_ENV=production node index"

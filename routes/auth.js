@@ -21,10 +21,12 @@ function authApi(app) {
             try{
                 if(error || !user){
                     next(boom.unauthorized());
+                    return;
                 }
                 req.logIn(user, {session: false}, async function(error) {
                     if(error) {
                         next(error);
+                        return;
                     }
 
                     const {id, name, email} = user;
