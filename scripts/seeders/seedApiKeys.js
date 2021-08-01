@@ -9,12 +9,22 @@ const ApiKeyModel = require('../../models/apiKey.model');
 
 const adminScopes = [
   'signin:auth',
-  'signup:auth'
+  'signup:auth',
+  'read:goals',
+  'read:goals:me',
+  'read:goal:me',
+  'create:goal:me',
+  'update:goal:me',
 ];
 
 const publicScopes = [
   'signin:auth',
-  'signup:auth'
+  'signup:auth',
+  'read:goals',
+  'read:goals:me',
+  'read:goal:me',
+  'create:goal:me',
+  'update:goal:me',
 ];
 
 function generateRandomToken() {

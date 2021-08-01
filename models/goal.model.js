@@ -1,41 +1,49 @@
 module.exports = function (sequelize, Sequelize) {
-  const User = sequelize.define('user', {
+  const Goal = sequelize.define('goal', {
     id: {
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    firstname: {
-      type: Sequelize.STRING,
-    },
-    lastname: {
-      type: Sequelize.STRING,
-    },
-    username: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-      unique: true
-    },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
-      unique: true
-    },
-    password: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    last_login: {
+    target_amount: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 0,
+      },
+    },
+    montly_amount: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 0,
+      },
+      defaultValue: 3
+    },
+    current_amount: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 0,
+      },
+      defaultValue: 0,
+    },
+    target_date: {
       type: Sequelize.DATE,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
     status: {
       type: Sequelize.ENUM('active', 'inactive'),
@@ -43,5 +51,5 @@ module.exports = function (sequelize, Sequelize) {
     },
   });
 
-  return User;
+  return Goal;
 };

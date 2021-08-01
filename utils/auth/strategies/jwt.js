@@ -2,7 +2,7 @@ const passport = require('passport');
 const { Strategy , ExtractJwt } = require('passport-jwt');
 const boom = require('@hapi/boom');
 
-const UsersService = require('../../../services/users');
+const UsersService = require('../../../services/user.service');
 const { config } = require('../../../config');
 
 passport.use(
@@ -15,10 +15,10 @@ passport.use(
             const userService = new UsersService();
             try{
                 const user = await userService.getUserByUsernameOrEmail({ email: tokenPayload.email });
-                if (!user) {
+                if (!user.id) {
                     return done(boom.unauthorized(), false);
                 }
-                delete user.passport; // Borramos la password por seguridad
+                delete user.password; // Borramos la password por seguridad
 
                 return done(null, user);
             } catch (error) {

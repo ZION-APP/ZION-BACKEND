@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
 
-const authApi = require('./routes/auth.router');
+const indexRouter = require('./routes/index.router');
 const { config } = require('./config/index');
 const { 
     logErrors, 
@@ -15,10 +15,16 @@ const {
 const notFoundHandler = require('./utils/middleware/notFoundHandler');
 const { dbConection } = require('./lib/mysql');
 
+// Swagger API Docs.
+const swaggerUi = require('swagger-ui-express');
+const swaggerDoc = require('yamljs').load('./swagger.yaml');
+
 // Morgan
 app.use(morgan('dev'));
 
 // Cors
+// const corsOptions = { origin: "http://example.com" };
+// app.use(cors(corsOptions));
 app.use(cors());
 
 // Body parse
@@ -32,10 +38,12 @@ app.use(helmet());
 app.use(passport.initialize());
 
 // Database
-dbConection();
+// dbConection();
 
-//Routes
-authApi(app);
+// Inicial Routes
+app.use('/v1/api', indexRouter)
+app.use('/v1/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
 
 //Middleware de errores
 app.use(logErrors);
