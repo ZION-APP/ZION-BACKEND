@@ -19,7 +19,8 @@ passport.use(
                     return done(boom.unauthorized(), false);
                 }
                 delete user.password; // Borramos la password por seguridad
-
+                user.scopes = tokenPayload.scopes;
+                
                 return done(null, user);
             } catch (error) {
                 return done(error);
