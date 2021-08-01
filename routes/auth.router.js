@@ -3,20 +3,34 @@ const passport = require('passport');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 
-const UsersService = require('../services/users');
-const validationHandler = require('../utils/middleware/validationHandler');
+// Services
+const UsersService = require('../services/user.service');
+const ApiKeyService = require('../services/apiKey.service');
 
-const { config } = require('../config');
-const { createUserSchema } = require('../utils/schemas/users');
+// Middlewares
+const validationHandler = require('../utils/middleware/validationHandler');
 
 // Basic Strategy
 require('../utils/auth/strategies/basic');
+
+// Configuration
+const { config } = require('../config');
+
+// Schemas
+const { createUserSchema } = require('../utils/schemas/user');
+
 
 function authApi(app) {
     const router = express.Router();
     app.use('/api/auth', router);
 
     router.post('/sign-in', async function(req, res, next) {
+        const {apiKeyToken} = req.body;
+
+        if(!apiKeyToken) {
+            next(boom.unauthorized('apiKeyToken is required'));
+        }
+
         passport.authenticate('basic', { session: false }, function(error, user) {
             try{
                 if(error || !user){
@@ -28,17 +42,27 @@ function authApi(app) {
                         next(error);
                         return;
                     }
+                    const apiKeyService = new ApiKeyService();
+                    const scopes = await apiKeyService.getScopes({token: apiKeyToken});
+                    
+                    if(!scopes) {
+                        next(boom.unauthorized());
+                    }
 
-                    const {id, name, email} = user;
+                    const {id, username, email} = user;
                     const payload = {
                         sud: id,
-                        name,
-                        email
+                        username,
+                        email,
+                        scopes
+                    };
+                    const options = { 
+                        expiresIn: '3600s', 
                     };
 
-                    const token = jwt.sign(payload, config.authJwtSecret, { expiresIn: '15m' });
+                    const token = jwt.sign(payload, config.authJwtSecret, options);
 
-                    res.status(200).json({token, user: {id, name, email}});
+                    res.status(200).json({token, user: {id, username, email}});
                 });
             } catch (error) {
                 next(error);
@@ -55,7 +79,7 @@ function authApi(app) {
         const { email } = user;
         try {
           const userService = new UsersService();
-          const userExists = await userService.getUser({ email });
+          const userExists = await userService.getUserByUsernameOrEmail({ email });
           if (!userExists) {
             const createdUserId = await userService.createUser({ user });
             if(createdUserId > 0) {

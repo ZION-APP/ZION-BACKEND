@@ -1,5 +1,6 @@
+// Archivo de reglas eslint, ver reglas en -> https://eslint.org/docs/rules/ 
 {
-    "env": { //Usaremos variables de de es6, node, mocha, commonjs; para que al momento de hacer test eslint no saque error
+    "env": { //Usaremos variables de es6, node, mocha, commonjs; para que al momento de hacer test eslint no saque error
         "commonjs": true,
         "es6": true,
         "node": true,
@@ -11,7 +12,7 @@
     },
     "rules": {
         "quotes": ["warn", "single"], // Para que de una alerta al no usar comillas simples
-        "semi": ["warn", "always"], // Para que que de una alerta al no usar ;
+        "semi": ["warn", "always"], // Para que de una alerta al no usar ; al final de un statement
         "no-console": "warn" // Para que de una alerta de los console.log() de la api
     }
 }
