@@ -13,6 +13,7 @@ const scopesValidationHandler = require('../utils/middleware/scopesValidationHan
 const {
   createGoalSchema,
   goalIdSchema,
+  updateGoalSchema,
 } = require('../utils/schemas/goal.schema');
 
 router.get(
@@ -92,7 +93,7 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['update:goal:me']),
   validationHandler({ goal_id: goalIdSchema }, 'params'),
-  validationHandler(createGoalSchema),
+  validationHandler(updateGoalSchema),
   async function (req, res, next) {
     const { body: goal } = req;
     const { goal_id } = req.params;
@@ -103,7 +104,6 @@ router.put(
 
     if (goalUpdated && goalUpdated[0] && goalUpdated[0] > 0) {
       res.status(200).json({
-        goal_id: goal_id,
         message: 'goal updated successfully',
       });
     } else {

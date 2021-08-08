@@ -45,10 +45,12 @@ router.post('/sign-in', async function (req, res, next) {
           next(boom.unauthorized());
         }
 
-        const { id, username, email } = user;
+        const { id, identity_number: cedula, username, email, phone } = user;
         const payload = {
           sud: id,
           username,
+          cedula,
+          phone,
           email,
           scopes,
         };
@@ -57,7 +59,7 @@ router.post('/sign-in', async function (req, res, next) {
           expiresIn: '3600s',
         });
 
-        res.status(200).json({ access_token, user: { id, username, email } });
+        res.status(200).json({ access_token, user: { id, username, email, cedula, phone } });
       });
     } catch (error) {
       next(error);

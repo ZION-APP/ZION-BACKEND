@@ -17,7 +17,7 @@ module.exports = function (sequelize, Sequelize) {
       validate: {
         notEmpty: true,
       },
-      unique: true
+      unique: true,
     },
     email: {
       type: Sequelize.STRING,
@@ -25,13 +25,34 @@ module.exports = function (sequelize, Sequelize) {
       validate: {
         isEmail: true,
       },
-      unique: true
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
+      },
+    },
+    identity_number: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+      unique: true,
+    },
+    phone: {
+      type: Sequelize.STRING,
+      validate: {
+        len: [10, 13],
+      },
+      unique: true,
+    },
+    url_profile: {
+      type: Sequelize.STRING,
+      validate: {
+        isUrl: true,
       },
     },
     last_login: {

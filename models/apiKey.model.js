@@ -7,11 +7,15 @@ module.exports = function (sequelize, Sequelize) {
     },
     token: {
       type: Sequelize.STRING,
-      notEmpty: true,
+      validate: {
+        notEmpty: true,
+      },
     },
     scope: {
       type: Sequelize.STRING,
-      notEmpty: true,
+      validate: {
+        notEmpty: true,
+      },
     },
     status: {
       type: Sequelize.ENUM('active', 'inactive'),

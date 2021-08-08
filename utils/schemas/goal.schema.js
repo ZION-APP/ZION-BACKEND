@@ -11,7 +11,14 @@ const createGoalSchema = {
     status: joi.string().max(10)
 };
 
+const updateGoalSchema = {
+    name: joi.string().max(100).required(),
+    current_amount: joi.number(),
+    status: joi.string().max(10)
+};
+
 module.exports = {
     goalIdSchema,
     createGoalSchema,
+    updateGoalSchema,
 };

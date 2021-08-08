@@ -12,6 +12,14 @@ module.exports = function (sequelize, Sequelize) {
         notEmpty: true,
       },
     },
+    init_amount: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 0,
+      },
+    },
     target_amount: {
       type: Sequelize.INTEGER,
       allowNull: false,

@@ -9,20 +9,17 @@ class UserService {
 
   async getAll() {
     const users = await this.table.findAll({
-      attributes: ['id', 'firstname', 'lastname', 'username', 'email', 'last_login', 'status']
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
     });
     return users;
   }
 
   async createUser({ user }) {
-    const { firstname, lastname, username, email, password } = user;
+    const { password } = user;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userCreated = await this.table.create({
-      firstname,
-      lastname,
-      username,
-      email,
+      ...user,
       password: hashedPassword,
     });
     return userCreated.id ? userCreated.id : null;
@@ -30,7 +27,7 @@ class UserService {
 
   async getUserById({ id }) {
     const user = await this.table.findOne({
-      attributes: ['id', 'firstname', 'lastname', 'username', 'email', 'last_login', 'status'],
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
       where: {
         id: id,
         status: 'active',
@@ -47,6 +44,18 @@ class UserService {
       },
     });
     return user;
+  }
+
+  async updateUserById({ user, id }) {
+    const userUpdated = await this.table.update(
+      { ...user },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    return userUpdated;
   }
 }
 
