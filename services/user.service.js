@@ -46,6 +46,36 @@ class UserService {
     return user;
   }
 
+  async getUserByUsername({ username }) {
+    const user = await this.table.findOne({
+      where: {
+        username: username,
+        status: 'active',
+      },
+    });
+    return user;
+  }
+
+  async getUserByEmail({ email }) {
+    const user = await this.table.findOne({
+      where: {
+        email: email,
+        status: 'active',
+      },
+    });
+    return user;
+  }
+
+  async getUserByIdentityNumber({ identity_number }) {
+    const user = await this.table.findOne({
+      where: {
+        identity_number: identity_number,
+        status: 'active',
+      },
+    });
+    return user;
+  }
+
   async updateUserById({ user, id }) {
     const userUpdated = await this.table.update(
       { ...user },

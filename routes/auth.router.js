@@ -72,12 +72,21 @@ router.post(
   validationHandler(createUserSchema),
   async function (req, res, next) {
     const { body: user } = req;
-    const { email } = user;
+    const { username, email, identity_number } = user;
     try {
       const userService = new UsersService();
-      const userExists = await userService.getUserByUsernameOrEmail({
-        email,
-      });
+      let userExists = await userService.getUserByUsername({ username });
+      if(userExists) {
+        res.status(202).json({ message: 'Username already exists' });
+      }
+      userExists = await userService.getUserByEmail({ email });
+      if(userExists) {
+        res.status(202).json({ message: 'Email already exists' });
+      }
+      userExists = await userService.getUserByIdentityNumber({ identity_number });
+      if(userExists) {
+        res.status(202).json({ message: 'Identity number already exists' });
+      }
       if (!userExists) {
         const createdUserId = await userService.createUser({ user });
         if (createdUserId > 0) {
