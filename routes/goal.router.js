@@ -21,9 +21,13 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['read:goals']),
   async function (req, res, next) {
-    const goalService = new GoalService();
-    const goals = await goalService.getAllGoals();
-    res.status(200).json(goals);
+    try {
+      const goalService = new GoalService();
+      const goals = await goalService.getAllGoals();
+      res.status(200).json(goals);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -32,12 +36,16 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['read:goals:me']),
   async function (req, res, next) {
-    const { id } = req.user;
+    try {
+      const { id } = req.user;
 
-    const goalService = new GoalService();
-    const goals = await goalService.getGoalsByUser({ id });
+      const goalService = new GoalService();
+      const goals = await goalService.getGoalsByUser({ id });
 
-    res.status(200).json(goals);
+      res.status(200).json(goals);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -47,13 +55,17 @@ router.get(
   scopesValidationHandler(['read:goal:me']),
   validationHandler({ goal_id: goalIdSchema }, 'params'),
   async function (req, res, next) {
-    const { goal_id } = req.params;
-    const { id: user_id } = req.user;
+    try {
+      const { goal_id } = req.params;
+      const { id: user_id } = req.user;
 
-    const goalService = new GoalService();
-    const goal = await goalService.getGoalByUser({ goal_id, user_id });
+      const goalService = new GoalService();
+      const goal = await goalService.getGoalByUser({ goal_id, user_id });
 
-    res.status(200).json(goal);
+      res.status(200).json(goal);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -63,27 +75,31 @@ router.post(
   scopesValidationHandler(['create:goal:me']),
   validationHandler(createGoalSchema),
   async function (req, res, next) {
-    const { body: goal } = req;
-    const { id } = req.user;
+    try {
+      const { body: goal } = req;
+      const { id } = req.user;
 
-    const goalService = new GoalService();
+      const goalService = new GoalService();
 
-    // Logica para crear el calculo de meses o cantidad a pagar
+      // Logica para crear el calculo de meses o cantidad a pagar
 
-    const goalCreated = await goalService.createGoalByUser({
-      goal,
-      user_id: id,
-    });
-
-    if (goalCreated && goalCreated.id > 0) {
-      res.status(201).json({
-        goal: goalCreated,
-        message: 'goal created successfully',
+      const goalCreated = await goalService.createGoalByUser({
+        goal,
+        user_id: id,
       });
-    } else {
-      res.status(202).json({
-        message: 'error while creating goal',
-      });
+
+      if (goalCreated && goalCreated.id > 0) {
+        res.status(201).json({
+          goal: goalCreated,
+          message: 'goal created successfully',
+        });
+      } else {
+        res.status(202).json({
+          message: 'error while creating goal',
+        });
+      }
+    } catch (err) {
+      next(err);
     }
   }
 );
@@ -95,21 +111,29 @@ router.put(
   validationHandler({ goal_id: goalIdSchema }, 'params'),
   validationHandler(updateGoalSchema),
   async function (req, res, next) {
-    const { body: goal } = req;
-    const { goal_id } = req.params;
-    const { id: user_id } = req.user;
+    try {
+      const { body: goal } = req;
+      const { goal_id } = req.params;
+      const { id: user_id } = req.user;
 
-    const goalService = new GoalService();
-    const goalUpdated = await goalService.updateGoalByUser({ user_id, goal_id, goal});
+      const goalService = new GoalService();
+      const goalUpdated = await goalService.updateGoalByUser({
+        user_id,
+        goal_id,
+        goal,
+      });
 
-    if (goalUpdated && goalUpdated[0] && goalUpdated[0] > 0) {
-      res.status(200).json({
-        message: 'goal updated successfully',
-      });
-    } else {
-      res.status(202).json({
-        message: 'error while updating goal',
-      });
+      if (goalUpdated && goalUpdated[0] && goalUpdated[0] > 0) {
+        res.status(200).json({
+          message: 'goal updated successfully',
+        });
+      } else {
+        res.status(202).json({
+          message: 'error while updating goal',
+        });
+      }
+    } catch (err) {
+      next(err);
     }
   }
 );

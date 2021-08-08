@@ -52,6 +52,7 @@ class GoalService {
       where: {
         id: goal_id,
         user_id: user_id,
+        status: 'active',
       },
     });
     return goalUpdated;

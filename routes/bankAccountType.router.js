@@ -9,11 +9,15 @@ router.get(
   '/catalogue',
   passport.authenticate('jwt', { session: false }),
   async function (req, res, next) {
-    const bankAccountTypeService = new BankAccountTypeService();
+    try {
+      const bankAccountTypeService = new BankAccountTypeService();
 
-    const bankAccountTypes = await bankAccountTypeService.getCatalogue();
+      const bankAccountTypes = await bankAccountTypeService.getCatalogue();
 
-    res.status(200).json(bankAccountTypes);
+      res.status(200).json(bankAccountTypes);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 

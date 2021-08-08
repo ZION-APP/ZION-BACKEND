@@ -9,11 +9,15 @@ router.get(
   '/catalogue',
   passport.authenticate('jwt', { session: false }),
   async function (req, res, next) {
-    const financialEntityService = new FinancialEntityService();
+    try {
+      const financialEntityService = new FinancialEntityService();
 
-    const entities = await financialEntityService.getCatalogue();
+      const entities = await financialEntityService.getCatalogue();
 
-    res.status(200).json(entities);
+      res.status(200).json(entities);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
