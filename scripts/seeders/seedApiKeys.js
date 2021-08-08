@@ -17,6 +17,8 @@ const adminScopes = [
   'read:user:all',
   'update:me',
   'read:me',
+  'admin',
+  'public',
 ];
 
 const publicScopes = [
@@ -28,6 +30,7 @@ const publicScopes = [
   'update:goal:me',
   'update:me',
   'read:me',
+  'public',
 ];
 
 function generateRandomToken() {
