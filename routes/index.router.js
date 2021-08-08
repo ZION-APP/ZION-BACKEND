@@ -9,6 +9,7 @@ const authRouter = require('./auth.router');
 const goalRouter = require('./goal.router');
 const userRouter = require('./user.router');
 const financialEntityRouter = require('./financialEntity.router');
+const bankAccountTypeRouter = require('./bankAccountType.router');
 
 router.get('/', function (req, res, next) {
   res.json({ name: 'API REST ZION', version: '1.0.0' });
@@ -18,5 +19,6 @@ router.use('/auth', authRouter);
 router.use('/goals', goalRouter);
 router.use('/users', userRouter);
 router.use('/financial_entities', financialEntityRouter);
+router.use('/bank_account_types', bankAccountTypeRouter);
 
 module.exports = router;
