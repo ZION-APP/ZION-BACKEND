@@ -13,7 +13,7 @@ module.exports = function (sequelize, Sequelize) {
       },
     },
     init_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -21,7 +21,7 @@ module.exports = function (sequelize, Sequelize) {
       },
     },
     target_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -29,7 +29,7 @@ module.exports = function (sequelize, Sequelize) {
       },
     },
     montly_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -38,7 +38,7 @@ module.exports = function (sequelize, Sequelize) {
       defaultValue: 3
     },
     current_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,

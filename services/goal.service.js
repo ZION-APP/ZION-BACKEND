@@ -6,7 +6,12 @@ class GoalService {
   }
 
   async getAllGoals() {
-    const goals = await this.table.findAll();
+    const goals = await this.table.findAll({
+      attributes: { exclude: ['updatedAt'] },
+      where: {
+        status: 'active',
+      },
+    });
     return goals;
   }
 

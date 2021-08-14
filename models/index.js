@@ -7,6 +7,7 @@ const GoalModel = require('./goal.model');
 const FinancialEntityModel = require('./financialEntity.model');
 const BankAccountModel = require('./bankAccount.model');
 const BankAccountTypeModel = require('./bankAccountType.model');
+const FormJuridicoModel = require('./formJuridico.model');
 
 // Instancias
 const User = UserModel(sequelize, Sequelize);
@@ -15,8 +16,11 @@ const Goal = GoalModel(sequelize, Sequelize);
 const FinancialEntity = FinancialEntityModel(sequelize, Sequelize);
 const BankAccount = BankAccountModel(sequelize, Sequelize);
 const BankAccountType = BankAccountTypeModel(sequelize, Sequelize);
+const FormJuridico = FormJuridicoModel(sequelize, Sequelize);
 
-// Descomentar si desea actualizar los modelos en la base de datos
+/** 
+ *    Descomentar si desea actualizar los modelos en la base de datos y luego volver a comentarlo 
+*/
 // sequelize.sync({ alter: true }).then(() => {
 //   console.log('All models were synchronized successfully.');
 // });
@@ -78,6 +82,22 @@ BankAccount.belongsTo(BankAccountType, {
   },
 });
 
+/* Un FormJuridico le pertenece a un usuario */
+User.hasOne(FormJuridico, {
+  foreignKey: {
+    name: 'user_id',
+    allowNull: false,
+  },
+  onDelete: 'NO ACTION',
+});
+FormJuridico.belongsTo(User, {
+  as: 'user',
+  foreignKey: {
+    name: 'user_id',
+  },
+});
+
+
 module.exports = {
   User,
   ApiKey,
@@ -85,4 +105,5 @@ module.exports = {
   FinancialEntity,
   BankAccount,
   BankAccountType,
+  FormJuridico
 };
