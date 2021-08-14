@@ -36,12 +36,8 @@ class GoalService {
   }
 
   async createGoalByUser({ goal, user_id }) {
-    const { name, target_amount, montly_amount, target_date } = goal;
     const goalCreated = await this.table.create({
-      name,
-      target_amount,
-      montly_amount,
-      target_date,
+      ...goal,
       user_id,
     });
     return goalCreated.id ? goalCreated : null;
