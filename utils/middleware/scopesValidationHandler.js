@@ -15,7 +15,7 @@ function scopesValidationHandler(allowedScopes) {
         } else {
             next(boom.unauthorized('Insufficient scopes'));
         }
-    }
+    };
 }
 
 module.exports = scopesValidationHandler;

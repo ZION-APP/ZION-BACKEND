@@ -41,7 +41,7 @@ app.use(passport.initialize());
 // dbConection();
 
 // Inicial Routes
-app.use('/v1/api', indexRouter)
+app.use('/v1/api', indexRouter);
 app.use('/v1/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 

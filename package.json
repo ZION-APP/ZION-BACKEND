@@ -8,6 +8,7 @@
     "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "DEBUG=app:* nodemon index",
+    "dev:win": "nodemon index",
     "start": "NODE_ENV=production node index"
   },
   "author": "TEAM 5.1",

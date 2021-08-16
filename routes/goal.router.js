@@ -76,12 +76,27 @@ router.post(
   validationHandler(createGoalSchema),
   async function (req, res, next) {
     try {
+      const { body: { type, init_amount, target_amount, target_date } } = req;
       const { body: goal } = req;
       const { id } = req.user;
-
       const goalService = new GoalService();
+      goal.current_amount = init_amount;
+      const final = new Date(target_date);
+      const hoy = new Date();
+      const meses_aportes = (final - hoy) * 12 / 31536000000;
+      const meses_aporte_bajo = Math.floor(meses_aportes);
+      var tasa = 0;
+      if (type == 'Omega') {
+        tasa = 0.0608;
+      } else { tasa = 0.0491; }
 
       // Logica para crear el calculo de meses o cantidad a pagar
+      k = (12 * target_amount) - (12 * init_amount) - (tasa * meses_aporte_bajo * init_amount);
+      x = 12 * (meses_aporte_bajo - 1) + (tasa * meses_aporte_bajo * (meses_aporte_bajo - 1) / 2);      
+      const aportemensual = k / x;
+      goal.montly_amount = Math.round(aportemensual*100)/100;
+
+
 
       const goalCreated = await goalService.createGoalByUser({
         goal,
@@ -137,5 +152,7 @@ router.put(
     }
   }
 );
+
+
 
 module.exports = router;

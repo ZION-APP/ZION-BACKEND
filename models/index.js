@@ -8,6 +8,7 @@ const FinancialEntityModel = require('./financialEntity.model');
 const BankAccountModel = require('./bankAccount.model');
 const BankAccountTypeModel = require('./bankAccountType.model');
 const FormJuridicoModel = require('./formJuridico.model');
+const NotificationModel = require('./notification.model'); 
 
 // Instancias
 const User = UserModel(sequelize, Sequelize);
@@ -17,14 +18,16 @@ const FinancialEntity = FinancialEntityModel(sequelize, Sequelize);
 const BankAccount = BankAccountModel(sequelize, Sequelize);
 const BankAccountType = BankAccountTypeModel(sequelize, Sequelize);
 const FormJuridico = FormJuridicoModel(sequelize, Sequelize);
+const Notification = NotificationModel(sequelize, Sequelize);
 
 /** 
  *    Descomentar si desea actualizar los modelos en la base de datos y luego volver a comentarlo 
 */
-// sequelize.sync({ alter: true }).then(() => {
-//   console.log('All models were synchronized successfully.');
-// });
-
+/*
+ sequelize.sync({ alter: true }).then(() => {
+   console.log('All models were synchronized successfully.');
+ });
+ */
 // ASOCIACIONES
 /*  Una meta tiene un usuario asociado y un usuario puede tener muchas metas */
 User.hasMany(Goal, {
@@ -97,6 +100,20 @@ FormJuridico.belongsTo(User, {
   },
 });
 
+/* Un usuario tiene multiples notificaciones */
+User.hasMany(Notification, {
+  foreignKey: {
+    name: 'user_id',
+    allowNull: false,
+  },
+  onDelete: 'NO ACTION',
+});
+Notification.belongsTo(User, {
+  as: 'user',
+  foreignKey: {
+    name: 'user_id',
+  },
+});
 
 module.exports = {
   User,
@@ -105,5 +122,6 @@ module.exports = {
   FinancialEntity,
   BankAccount,
   BankAccountType,
-  FormJuridico
+  FormJuridico,
+  Notification
 };

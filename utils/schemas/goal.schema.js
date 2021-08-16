@@ -3,6 +3,7 @@ const joi = require('@hapi/joi');
 const goalIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
 
 const createGoalSchema = {
+    type: joi.string().max(100).required(),
     name: joi.string().max(100).required(),
     target_amount: joi.number().required(),
     montly_amount: joi.number(),

@@ -87,6 +87,37 @@ class UserService {
     );
     return userUpdated;
   }
+  async compararPassword({ password, id }) {
+    const user = await this.table.findOne({
+      attributes: ['password'],
+      where: {
+        id: id,
+        status: 'active',
+      },
+    });
+    if (!(await bcrypt.compare(password, user.password))) {
+      return false;
+    } else {
+      return true;
+    }
+
+  }
+  async updatePassbyUser({ password, new_password, id }) {
+    if (await this.compararPassword({ password, id })) {
+      const hashedPassword = await bcrypt.hash(new_password, 10);
+      const userUpdated = await this.table.update(
+        { password: hashedPassword },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      return userUpdated;
+    }
+    else
+      return null;
+  }
 }
 
 module.exports = UserService;

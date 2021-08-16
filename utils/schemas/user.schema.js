@@ -23,8 +23,19 @@ const updateUserSchema = {
   url_profile: joi.string(),
 };
 
+const updateUserPasswordSchema={
+  password: joi.string().max(20).required(),
+  new_password: joi.string().max(20).required()
+}
+
+const updateUserProfileSchema={
+  url_profile: joi.string().required()
+}
+
 module.exports = {
   userIdSchema,
   createUserSchema,
   updateUserSchema,
+  updateUserProfileSchema,
+  updateUserPasswordSchema
 };
