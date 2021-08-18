@@ -11,6 +11,8 @@ const createUserSchema = {
   identity_number: joi.string().max(10).required(),
   phone: joi.string(),
   url_profile: joi.string(),
+  kind_of_type: joi.string(),
+  is_form_complete: joi.boolean(),
 };
 
 const updateUserSchema = {
@@ -21,14 +23,16 @@ const updateUserSchema = {
   // identity_number: joi.string(),
   phone: joi.string().max(13),
   url_profile: joi.string(),
+  // kind_of_type: joi.string(),
+  is_form_complete: joi.boolean(),
 };
 
-const updateUserPasswordSchema={
+const updateUserPasswordSchema = {
   password: joi.string().max(20).required(),
   new_password: joi.string().max(20).required()
 }
 
-const updateUserProfileSchema={
+const updateUserProfileSchema = {
   url_profile: joi.string().required()
 }
 
