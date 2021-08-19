@@ -33,7 +33,7 @@ class NotificationService {
         return notificationCreated.id ? notificationCreated : null;
     }
     async createGlobalNotification({ notification, users }) {
-        users.forEach(user => createNotificationByUser({notification,user}));       
+        await users.forEach(user => createNotificationByUser({notification,user}));       
         return true;
     }
         

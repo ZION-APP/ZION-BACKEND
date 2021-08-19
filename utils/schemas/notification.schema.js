@@ -4,6 +4,7 @@ const notificationIdSchema = joi.number();
 
 const createNotificationSchema = {
     tittle: joi.string().max(100).required(),
+    fecha: joi.date().required(),
     body: joi.number().required(),
     status: joi.string().max(10)
 };

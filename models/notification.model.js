@@ -11,7 +11,14 @@ module.exports = function (sequelize, Sequelize) {
         validate: {
           notEmpty: true,
         },
-      },    
+      },
+      fecha: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },   
       body: {
         type: Sequelize.STRING,
         allowNull: false,

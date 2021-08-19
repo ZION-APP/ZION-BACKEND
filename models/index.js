@@ -23,11 +23,11 @@ const Notification = NotificationModel(sequelize, Sequelize);
 /** 
  *    Descomentar si desea actualizar los modelos en la base de datos y luego volver a comentarlo 
 */
-/*
+
  sequelize.sync({ alter: true }).then(() => {
    console.log('All models were synchronized successfully.');
  });
- */
+ 
 // ASOCIACIONES
 /*  Una meta tiene un usuario asociado y un usuario puede tener muchas metas */
 User.hasMany(Goal, {
