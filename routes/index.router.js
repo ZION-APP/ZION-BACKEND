@@ -13,6 +13,7 @@ const financialEntityRouter = require('./financialEntity.router');
 const bankAccountTypeRouter = require('./bankAccountType.router');
 const bankAccountRouter = require('./bankAccount.router');
 const formJuridicoRouter = require('./formJuridico.router');
+const kindOfPersonRouter = require('./kindOfPerson.router');
 
 
 router.get('/', function (req, res, next) {
@@ -27,6 +28,7 @@ router.use('/financial_entities', financialEntityRouter);
 router.use('/bank_account_types', bankAccountTypeRouter);
 router.use('/bank_accounts', bankAccountRouter);
 router.use('/form_juridico', formJuridicoRouter);
+router.use('/kind_of_person', kindOfPersonRouter);
 
 
 module.exports = router;

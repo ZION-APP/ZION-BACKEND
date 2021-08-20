@@ -55,10 +55,6 @@ module.exports = function (sequelize, Sequelize) {
         isUrl: true,
       },
     },
-    kind_of_type: {
-      type: Sequelize.ENUM('natural', 'juridica'),
-      defaultValue: 'natural',
-    },
     is_form_complete: {
       type: Sequelize.BOOLEAN,
       defaultValue: false

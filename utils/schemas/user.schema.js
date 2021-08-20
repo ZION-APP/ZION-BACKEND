@@ -11,7 +11,7 @@ const createUserSchema = {
   identity_number: joi.string().max(10).required(),
   phone: joi.string(),
   url_profile: joi.string(),
-  kind_of_type: joi.string(),
+  kind_of_person_id: joi.number(),
   is_form_complete: joi.boolean(),
 };
 
