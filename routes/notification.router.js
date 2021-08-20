@@ -33,6 +33,26 @@ router.get(
       }
 );
 
+router.get(
+  '/me/:notification_id',
+  passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['public']),
+  validationHandler({ notification_id: notificationIdSchema }, 'params'),
+  async function (req, res, next) {
+      try {
+        const { id: user_id } = req.user;
+        const { notification_id } = req.params;
+  
+        const notificationService = new NotificationService();
+        const notification = await notificationService.getNotificationByUser({ notification_id, user_id });
+  
+        res.status(200).json(notification);
+      } catch (err) {
+        next(err);
+      }
+    }
+);
+
 router.post(
   '/me',
   passport.authenticate('jwt', { session: false }),

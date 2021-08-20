@@ -57,10 +57,10 @@ router.get(
   async function (req, res, next) {
     try {
       const { goal_id } = req.params;
-      const { id } = req.user;
+      const { id: user_id } = req.user;
 
       const goalService = new GoalService();
-      const goal = await goalService.getGoalByUser({ goal_id, id });
+      const goal = await goalService.getGoalByUser({ goal_id, user_id });
 
       res.status(200).json(goal);
     } catch (err) {
