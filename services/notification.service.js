@@ -15,11 +15,11 @@ class NotificationService {
       return notification;
     } 
 
-    async getNotificationsByUser({ id }) {
+    async getNotificationsByUser({ user_id }) {
         const notification = await this.table.findAll({
             attributes: { exclude: ['updatedAt'] },
             where: {
-              user_id: id,
+              user_id: user_id,
               status: 'active',
             },
           });

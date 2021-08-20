@@ -18,13 +18,13 @@ const {
 router.get(
     '/me',
     passport.authenticate('jwt', { session: false }),
-    scopesValidationHandler(['read:notifications:me']),
+    scopesValidationHandler(['public']),
     async function (req, res, next) {
         try {
-          const { id: id_user } = req.user;
+          const { id: user_id } = req.user;
     
           const notificationService = new NotificationService();
-          const notifications = await notificationService.getNotificationsByUser({ id_user });
+          const notifications = await notificationService.getNotificationsByUser({ user_id });
     
           res.status(200).json(notifications);
         } catch (err) {
@@ -36,7 +36,7 @@ router.get(
 router.post(
   '/me',
   passport.authenticate('jwt', { session: false }),
-  scopesValidationHandler(['create:notifications:me']),  
+  scopesValidationHandler(['admin']),  
   validationHandler(createNotificationSchema),
   async function (req, res, next) {
       try {
