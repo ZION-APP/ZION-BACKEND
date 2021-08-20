@@ -1,5 +1,5 @@
 module.exports = function (sequelize, Sequelize) {
-  const FormJuridico = sequelize.define('form_juridico', {
+  const Form = sequelize.define('form', {
     id: {
       autoIncrement: true,
       primaryKey: true,
@@ -9,10 +9,6 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.TEXT,
       allowNull: true,
       
-    },
-    cod_tipo_persona_juridica: {
-      type: Sequelize.TEXT,
-      allowNull: true,
     },
     restringir_info: {
       type: Sequelize.TEXT,
@@ -345,5 +341,5 @@ module.exports = function (sequelize, Sequelize) {
     },
   });
 
-  return FormJuridico;
+  return Form;
 };

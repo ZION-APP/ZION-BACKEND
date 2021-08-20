@@ -1,8 +1,8 @@
 const joi = require('@hapi/joi');
 
-const formJuridicoIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
+const formIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
 
-const createFormJuridicoSchema = {
+const createFormSchema = {
   categoria: joi.string().max(100),
   cod_tipo_persona_juridica: joi.string().max(100),
   restringir_info: joi.string().max(100),
@@ -12,7 +12,7 @@ const createFormJuridicoSchema = {
   nombre_2: joi.string().max(100),
   apellido_paterno: joi.string().max(100),
   apellido_materno: joi.string().max(100),
-  cod_tipo_contribuyente: joi.string().max(100),
+  kind_of_person_id: joi.number().required(),
   es_autoretenedor: joi.boolean(),
   cod_pais: joi.string().max(100),
   nombre_correspondencia: joi.string().max(100),
@@ -96,7 +96,7 @@ const createFormJuridicoSchema = {
 // };
 
 module.exports = {
-  formJuridicoIdSchema,
-  createFormJuridicoSchema,
+  formIdSchema,
+  createFormSchema,
   // updateFormJuridicoSchema,
 };

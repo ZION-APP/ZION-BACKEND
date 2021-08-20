@@ -12,7 +12,7 @@ const notificationRouter = require('./notification.router');
 const financialEntityRouter = require('./financialEntity.router');
 const bankAccountTypeRouter = require('./bankAccountType.router');
 const bankAccountRouter = require('./bankAccount.router');
-const formJuridicoRouter = require('./formJuridico.router');
+const formRouter = require('./form.router');
 const kindOfPersonRouter = require('./kindOfPerson.router');
 
 
@@ -27,7 +27,7 @@ router.use('/notifications', notificationRouter);
 router.use('/financial_entities', financialEntityRouter);
 router.use('/bank_account_types', bankAccountTypeRouter);
 router.use('/bank_accounts', bankAccountRouter);
-router.use('/form_juridico', formJuridicoRouter);
+router.use('/form', formRouter);
 router.use('/kind_of_person', kindOfPersonRouter);
 
 

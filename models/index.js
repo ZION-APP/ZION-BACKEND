@@ -7,7 +7,7 @@ const GoalModel = require('./goal.model');
 const FinancialEntityModel = require('./financialEntity.model');
 const BankAccountModel = require('./bankAccount.model');
 const BankAccountTypeModel = require('./bankAccountType.model');
-const FormJuridicoModel = require('./formJuridico.model');
+const FormModel = require('./form.model');
 const NotificationModel = require('./notification.model'); 
 const KindOfPersonModel = require('./kindOfPerson.model'); 
 
@@ -18,7 +18,7 @@ const Goal = GoalModel(sequelize, Sequelize);
 const FinancialEntity = FinancialEntityModel(sequelize, Sequelize);
 const BankAccount = BankAccountModel(sequelize, Sequelize);
 const BankAccountType = BankAccountTypeModel(sequelize, Sequelize);
-const FormJuridico = FormJuridicoModel(sequelize, Sequelize);
+const Form = FormModel(sequelize, Sequelize);
 const Notification = NotificationModel(sequelize, Sequelize);
 const KindOfPerson = KindOfPersonModel(sequelize, Sequelize);
 
@@ -87,15 +87,15 @@ BankAccount.belongsTo(BankAccountType, {
   },
 });
 
-/* Un FormJuridico le pertenece a un usuario */
-User.hasOne(FormJuridico, {
+/* Un Form le pertenece a un usuario */
+User.hasOne(Form, {
   foreignKey: {
     name: 'user_id',
     allowNull: false,
   },
   onDelete: 'NO ACTION',
 });
-FormJuridico.belongsTo(User, {
+Form.belongsTo(User, {
   as: 'user',
   foreignKey: {
     name: 'user_id',
@@ -117,7 +117,7 @@ Notification.belongsTo(User, {
   },
 });
 
-/* Un usuario tiene un tipo de persona */
+/* Un usuario tiene un tipo de persona y un formulario tambien */
 KindOfPerson.hasMany(User, {
   foreignKey: {
     name: 'kind_of_person_id',
@@ -132,6 +132,20 @@ User.belongsTo(KindOfPerson, {
   },
 });
 
+KindOfPerson.hasMany(Form, {
+  foreignKey: {
+    name: 'kind_of_person_id',
+    allowNull: false,
+  },
+  onDelete: 'NO ACTION',
+});
+Form.belongsTo(KindOfPerson, {
+  as: 'kind_of_person',
+  foreignKey: {
+    name: 'kind_of_person_id',
+  },
+});
+
 module.exports = {
   User,
   KindOfPerson,
@@ -140,6 +154,6 @@ module.exports = {
   FinancialEntity,
   BankAccount,
   BankAccountType,
-  FormJuridico,
+  Form,
   Notification
 };

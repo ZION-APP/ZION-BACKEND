@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // Services
-const FormJuridicoService = require('../services/formJuridico.service');
+const FormService = require('../services/form.service');
 
 // Middlewares
 const validationHandler = require('../utils/middleware/validationHandler');
@@ -11,9 +11,9 @@ const scopesValidationHandler = require('../utils/middleware/scopesValidationHan
 
 // Schemas
 const {
-  formJuridicoIdSchema,
-  createFormJuridicoSchema,
-} = require('../utils/schemas/formJuridico.schema');
+  formIdSchema,
+  createFormSchema,
+} = require('../utils/schemas/form.schema');
 
 router.get(
   '/',
@@ -21,8 +21,8 @@ router.get(
   scopesValidationHandler(['admin']),
   async function (req, res, next) {
     try {
-      const formJuridicoService = new FormJuridicoService();
-      const forms = await formJuridicoService.getAllForms();
+      const formService = new FormService();
+      const forms = await formService.getAllForms();
       res.status(200).json(forms);
     } catch (err) {
       next(err);
@@ -38,8 +38,8 @@ router.get(
     try {
       const { id: user_id } = req.user;
 
-      const formJuridicoService = new FormJuridicoService();
-      const forms = await formJuridicoService.getFormsByUser({ user_id });
+      const formService = new FormService();
+      const forms = await formService.getFormsByUser({ user_id });
 
       res.status(200).json(forms);
     } catch (err) {
@@ -49,19 +49,19 @@ router.get(
 );
 
 router.get(
-  '/me/:form_juridico_id',
+  '/me/:form_id',
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['public']),
-  validationHandler({ form_juridico_id: formJuridicoIdSchema }, 'params'),
+  validationHandler({ form_id: formIdSchema }, 'params'),
   async function (req, res, next) {
     try {
-      const { form_juridico_id } = req.params;
+      const { form_id } = req.params;
       const { id: user_id } = req.user;
 
-      const formJuridicoService = new FormJuridicoService();
-      const form = await formJuridicoService.getFormByUser({
+      const formService = new FormService();
+      const form = await formService.getFormByUser({
         user_id,
-        form_juridico_id,
+        form_id,
       });
 
       res.status(200).json(form);
@@ -75,15 +75,15 @@ router.post(
   '/me',
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['public']),
-  validationHandler(createFormJuridicoSchema),
+  validationHandler(createFormSchema),
   async function (req, res, next) {
     try {
-      const { body: form_juridico } = req;
+      const { body: form } = req;
       const { id } = req.user;
 
-      const formJuridicoService = new FormJuridicoService();
-      const formCreated = await formJuridicoService.createFormByUser({
-        form_juridico,
+      const formService = new FormService();
+      const formCreated = await formService.createFormByUser({
+        form,
         user_id: id,
       });
 
@@ -104,23 +104,23 @@ router.post(
 );
 
 router.put(
-  '/me/:form_juridico_id',
+  '/me/:form_id',
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['public']),
-  validationHandler({ form_juridico_id: formJuridicoIdSchema }, 'params'),
-  validationHandler(createFormJuridicoSchema),
+  validationHandler({ form_id: formIdSchema }, 'params'),
+  validationHandler(createFormSchema),
   async function (req, res, next) {
     try {
-      const { body: form_juridico } = req;
-      const { form_juridico_id } = req.params;
+      const { body: form } = req;
+      const { form_id } = req.params;
       const { id: user_id } = req.user;
 
-      const formJuridicoService = new FormJuridicoService();
+      const formService = new FormService();
 
-      const formUpdated = await formJuridicoService.updateFormByUser({
+      const formUpdated = await formService.updateFormByUser({
         user_id,
-        form_juridico_id,
-        form_juridico,
+        form_id,
+        form,
       });
 
       if (formUpdated && formUpdated[0] && formUpdated[0] > 0) {
@@ -139,19 +139,19 @@ router.put(
 );
 
 router.delete(
-  '/me/:form_juridico_id',
+  '/me/:form_id',
   passport.authenticate('jwt', { session: false }),
   scopesValidationHandler(['public']),
-  validationHandler({ form_juridico_id: formJuridicoIdSchema }, 'params'),
+  validationHandler({ form_id: formIdSchema }, 'params'),
   async function (req, res, next) {
     try {
-      const { form_juridico_id } = req.params;
+      const { form_id } = req.params;
       const { id: user_id } = req.user;
-      const formJuridicoService = new FormJuridicoService();
+      const formService = new FormService();
 
-      const formDeleted = await formJuridicoService.deleteFormByUser({
+      const formDeleted = await formService.deleteFormByUser({
         user_id,
-        form_juridico_id,
+        form_id,
       });
       if (formDeleted && formDeleted > 0) {
         res.status(200).json({
