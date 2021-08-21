@@ -8,7 +8,7 @@ const createUserSchema = {
   username: joi.string().max(100),
   email: joi.string().email().required(),
   password: joi.string().max(20).required(),
-  identity_number: joi.string().max(10).required(),
+  identity_number: joi.string().max(13).min(10).required(),
   phone: joi.string(),
   url_profile: joi.string(),
   kind_of_person_id: joi.number().required(),
