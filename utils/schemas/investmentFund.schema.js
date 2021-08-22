@@ -1,26 +1,27 @@
 const joi = require('@hapi/joi');
 
-const goalIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
+const iFundIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
 
-const createGoalSchema = {
+const createIFundSchema = {
     name: joi.string().max(100).required(),
     target_amount: joi.number().required(),
     montly_amount: joi.number(),
     current_amount: joi.number(),
     init_amount: joi.number().min(1).required(),
     target_date: joi.date().required(),
-    fund_id: joi.number().min(1).max(2).required(),
+    goal_id: joi.number().required(),
+    fund_id: joi.number().required(),
     status: joi.string().max(10)
 };
 
-const updateGoalSchema = {
+const updateIFundSchema = {
     name: joi.string().max(100),
     current_amount: joi.number(),
     status: joi.string().max(10)
 };
 
 module.exports = {
-    goalIdSchema,
-    createGoalSchema,
-    updateGoalSchema,
+    iFundIdSchema,
+    createIFundSchema,
+    updateIFundSchema,
 };

@@ -14,6 +14,8 @@ const bankAccountTypeRouter = require('./bankAccountType.router');
 const bankAccountRouter = require('./bankAccount.router');
 const formRouter = require('./form.router');
 const kindOfPersonRouter = require('./kindOfPerson.router');
+const fundRouter = require('./fund.router');
+const investmentFundRouter = require('./investmentFund.router');
 
 
 router.get('/', function (req, res, next) {
@@ -29,6 +31,8 @@ router.use('/bank_account_types', bankAccountTypeRouter);
 router.use('/bank_accounts', bankAccountRouter);
 router.use('/form', formRouter);
 router.use('/kind_of_person', kindOfPersonRouter);
+router.use('/funds', fundRouter);
+router.use('/investment_funds', investmentFundRouter);
 
 
 module.exports = router;
