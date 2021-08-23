@@ -22,6 +22,7 @@ class GoalService {
         user_id: id,
         status: 'active',
       },
+      include: ['fund']
     });
 
     return goals;
