@@ -79,17 +79,26 @@ router.post(
     try {
       const { body: iFund } = req;
       const { id: user_id } = req.user;
-      // const goal_id = iFund.goal_id;
-      // const goal = { status: 'inactive'};
-
-      // const goalService = new GoalService();
-      // const goalUpdated = await goalService.updateGoalByUser({ user_id, goal_id, goal });
-
-      // if(!goalUpdated || !goalUpdated[0] || goalUpdated[0] <= 0) {
-      //   res.status(202).json({
-      //     message: 'Error en convertir la meta en un fondo',
-      //   });
-      // }
+      const isNewFund = iFund.is_new_fund;
+      if(isNewFund) {
+        iFund.current_amount = iFund.init_amount;
+        const final = new Date(iFund.target_date);
+        const hoy = new Date();
+        const meses_aportes = (final - hoy) * 12 / 31536000000;
+        const meses_aporte_bajo = Math.floor(meses_aportes);
+        var tasa = 0;
+        if (iFund.fund_id == 1) {
+          tasa = 0.0608;
+        } else if (iFund.fund_id == 2) { 
+          tasa = 0.0491; 
+        }
+  
+        // Logica para crear el calculo de meses o cantidad a pagar
+        k = (12 * iFund.target_amount) - (12 * iFund.init_amount) - (tasa * meses_aporte_bajo * iFund.init_amount);
+        x = 12 * (meses_aporte_bajo - 1) + (tasa * meses_aporte_bajo * (meses_aporte_bajo - 1) / 2);      
+        const aportemensual = k / x;
+        iFund.montly_amount = Math.round(aportemensual*100)/100;
+      }
 
       const investmentFundService = new InvestmentFundService();
       const iFundCreated = await investmentFundService.createInvestmentFundByUser({
