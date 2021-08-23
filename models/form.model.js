@@ -5,6 +5,48 @@ module.exports = function (sequelize, Sequelize) {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
+    nombre_empresa: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    ingreso_mensual: {
+      type: Sequelize.FLOAT,
+      allowNull: true,
+    },
+    cargo_empresa: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    ruc_empresa: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
+    direccion_empresa: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    identificacion: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
+    direccion_hogar: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    nombre_conyuge: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    apellido_conyuge: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    ingreso_mensual_conyuge: {
+      type: Sequelize.FLOAT,
+      allowNull: true,
+    },
+
+
     categoria: {
       type: Sequelize.TEXT,
       allowNull: true,

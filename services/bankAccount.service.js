@@ -21,6 +21,7 @@ class BankAccountService {
         user_id: user_id,
         status: 'active',
       },
+      include: ['financial_entity', 'bank_account_type']
     });
 
     return bankAccounts;
@@ -34,6 +35,7 @@ class BankAccountService {
         user_id: user_id,
         status: 'active',
       },
+      include: ['financial_entity', 'bank_account_type']
     });
 
     return bankAccount;

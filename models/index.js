@@ -111,6 +111,20 @@ InvestmentFund.belongsTo(Fund, {
   },
 });
 
+/*  Un fondo de inversion tiene una cuenta bancaria asociada y una cuenta bancaria puede estar en muchos fondos de inversion*/
+BankAccount.hasMany(InvestmentFund, {
+  foreignKey: {
+    name: 'bank_account_id',
+    allowNull: false,
+  },
+  onDelete: 'NO ACTION',
+});
+InvestmentFund.belongsTo(BankAccount, {
+  as: 'bank_account',
+  foreignKey: {
+    name: 'bank_account_id',
+  },
+});
 
 /*  Una cuenta bancaria le pertenece a un usuario y tiene asociada una entidad financiera y un tipo de cuenta bancaria */
 User.hasMany(BankAccount, {

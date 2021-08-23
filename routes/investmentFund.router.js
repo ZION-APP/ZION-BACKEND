@@ -79,17 +79,17 @@ router.post(
     try {
       const { body: iFund } = req;
       const { id: user_id } = req.user;
-      const goal_id = iFund.goal_id;
-      const goal = { status: 'inactive'};
+      // const goal_id = iFund.goal_id;
+      // const goal = { status: 'inactive'};
 
-      const goalService = new GoalService();
-      const goalUpdated = await goalService.updateGoalByUser({ user_id, goal_id, goal });
+      // const goalService = new GoalService();
+      // const goalUpdated = await goalService.updateGoalByUser({ user_id, goal_id, goal });
 
-      if(!goalUpdated || !goalUpdated[0] || goalUpdated[0] <= 0) {
-        res.status(202).json({
-          message: 'Error en convertir la meta en un fondo',
-        });
-      }
+      // if(!goalUpdated || !goalUpdated[0] || goalUpdated[0] <= 0) {
+      //   res.status(202).json({
+      //     message: 'Error en convertir la meta en un fondo',
+      //   });
+      // }
 
       const investmentFundService = new InvestmentFundService();
       const iFundCreated = await investmentFundService.createInvestmentFundByUser({

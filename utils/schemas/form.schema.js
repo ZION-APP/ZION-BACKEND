@@ -3,6 +3,19 @@ const joi = require('@hapi/joi');
 const formIdSchema = joi.string().regex(/^[0-9]{1,50}$/);
 
 const createFormSchema = {
+  nombre_empresa: joi.string(),
+  ingreso_mensual: joi.number(),
+  cargo_empresa: joi.string(),
+  ruc_empresa: joi.number(),
+  direccion_empresa: joi.string(),
+  identificacion: joi.number(),
+  direccion_hogar: joi.string(),
+  nombre_conyuge: joi.string(),
+  apellido_conyuge: joi.string(),
+  ingreso_mensual_conyuge: joi.number(),
+
+  // Before
+
   categoria: joi.string().max(100),
   cod_tipo_persona_juridica: joi.string().max(100),
   restringir_info: joi.string().max(100),
