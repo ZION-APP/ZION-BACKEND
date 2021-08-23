@@ -78,7 +78,7 @@ class UserService {
 
   async updateUserById({ user, id }) {
     const userUpdated = await this.table.update(
-      { ...user },
+      user,
       {
         where: {
           id: id,

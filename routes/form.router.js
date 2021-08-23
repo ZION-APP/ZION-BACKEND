@@ -4,6 +4,7 @@ const passport = require('passport');
 
 // Services
 const FormService = require('../services/form.service');
+const UserService = require('../services/user.service');
 
 // Middlewares
 const validationHandler = require('../utils/middleware/validationHandler');
@@ -86,6 +87,11 @@ router.post(
         form,
         user_id: id,
       });
+
+      const userService = new UserService();
+      const user = { is_form_complete: true };
+      await userService.updateUserById({ user, id })
+
 
       if (formCreated && formCreated.id > 0) {
         res.status(201).json({
