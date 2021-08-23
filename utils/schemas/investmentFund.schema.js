@@ -11,6 +11,7 @@ const createIFundSchema = {
     target_date: joi.date().required(),
     goal_id: joi.number().required(),
     fund_id: joi.number().required(),
+    bank_account_id: joi.number().required(),
     status: joi.string().max(10)
 };
 
