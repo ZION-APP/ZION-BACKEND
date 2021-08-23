@@ -18,7 +18,7 @@ module.exports = function (sequelize, Sequelize) {
       allowNull: true,
     },
     ruc_empresa: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true,
     },
     direccion_empresa: {

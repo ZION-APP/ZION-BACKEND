@@ -6,7 +6,7 @@ const createFormSchema = {
   nombre_empresa: joi.string(),
   ingreso_mensual: joi.number(),
   cargo_empresa: joi.string(),
-  ruc_empresa: joi.number(),
+  ruc_empresa: joi.string().length(13),
   direccion_empresa: joi.string(),
   identificacion: joi.number(),
   direccion_hogar: joi.string(),
